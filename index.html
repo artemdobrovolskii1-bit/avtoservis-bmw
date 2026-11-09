@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Светлый Бокс — автосервис в Челябинске: диагностика в 3D</title>
+<meta name="description" content="Автосервис «Светлый Бокс»: покажем ремонт на 3D-модели, соберём заказ-наряд с ценами и запишем на удобное время. Демо, данные — образец.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Светлый Бокс — диагностика на виду">
+<link href="fonts/fonts.css" rel="stylesheet">
+<!-- Яндекс Метрика: вставьте сюда код счётчика клиента -->
+<style>
+:root{--bg:#f4f6f3;--bg2:#e8eee9;--card:#ffffff;--ink:#14201c;--mute:#5a6a63;--acc:#0b7d5f;--acc-ink:#ffffff;--line:#d3dcd6;--deep:#0d1915;--wa:#177f44;--tg:#1d76b0;--r:18px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 Onest,system-ui,sans-serif;overflow-x:hidden}
+a{color:inherit}
+h1,h2,h3{line-height:1.08;font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(30px,4.4vw,50px);margin-bottom:14px}
+.mono{font-family:'JetBrains Mono',monospace}
+.wr{max-width:1160px;margin:0 auto;padding:0 20px}
+.sec{padding:96px 0}
+.kick{display:inline-block;font:600 13px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-bottom:12px}
+.lead{color:var(--mute);font-size:18px;max-width:640px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 26px;border-radius:999px;font:700 16px Onest,sans-serif;text-decoration:none;border:2px solid transparent;cursor:pointer;transition:.2s}
+.btn.pri{background:var(--acc);color:var(--acc-ink)}
+.btn.pri:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn.line{border-color:var(--line);background:var(--card);color:var(--ink)}
+.btn.line:hover{border-color:var(--acc);color:var(--acc)}
+.btn.wa{background:var(--wa);color:#fff}
+
+/* шапка */
+.nav{position:fixed;inset:0 0 auto;z-index:50;transition:.3s}
+.nav.solid{background:rgba(244,246,243,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wr{display:flex;align-items:center;justify-content:space-between;height:70px;gap:18px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;text-decoration:none}
+.logo i{width:34px;height:34px;border-radius:10px;background:var(--acc);display:grid;place-items:center}
+.logo svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2}
+.nav ul{display:flex;gap:24px;list-style:none}
+.nav ul a{text-decoration:none;font-weight:600;font-size:15px;color:var(--mute)}
+.nav ul a:hover{color:var(--acc)}
+.nav .btn{padding:10px 20px;font-size:14px}
+.burger{display:none;background:none;border:0;font-size:28px;cursor:pointer;color:var(--ink)}
+
+/* 3D-история */
+.track{position:relative;height:640vh}
+.stage{position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(1100px 700px at 50% 62%,#ffffff 0%,var(--bg2) 60%,#dfe7e1 100%)}
+.stage .nightbg{position:absolute;inset:0;background:radial-gradient(1000px 650px at 50% 65%,#1c2c26 0%,var(--deep) 70%);opacity:0;transition:none}
+#c1{position:absolute;inset:0;width:100%;height:100%;display:block}
+.chap{position:absolute;left:max(20px,calc(50% - 560px));top:clamp(92px,14vh,150px);max-width:470px;pointer-events:none}
+.chap .s{position:absolute;left:0;top:0;width:min(470px,calc(100vw - 40px));padding:18px 20px;border-radius:18px;background:rgba(244,246,243,.78);backdrop-filter:blur(6px);opacity:0;transform:translateY(18px);transition:opacity .45s,transform .45s}
+.chap .s.on{opacity:1;transform:none}
+.chap .n{font:600 13px 'JetBrains Mono',monospace;color:var(--acc);letter-spacing:.12em}
+.chap h1,.chap h2{font-size:clamp(30px,4.6vw,56px);margin:8px 0 12px}
+.chap p{color:var(--mute);font-size:17px}
+.chap ul{list-style:none;margin-top:14px;display:grid;gap:6px;font-size:15px}
+.chap li::before{content:'✓ ';color:var(--acc);font-weight:800}
+.stage.dark .chap .s{background:rgba(13,25,21,.6)}
+.stage.dark .chap p,.stage.dark .chap li{color:#b9cbc3}
+.stage.dark .chap h1,.stage.dark .chap h2{color:#f2f7f4}
+.prog{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);display:flex;gap:8px}
+.prog i{width:34px;height:4px;border-radius:4px;background:rgba(20,32,28,.15);overflow:hidden;position:relative}
+.prog i b{position:absolute;inset:0;width:0;background:var(--acc)}
+.stage.dark .prog i{background:rgba(255,255,255,.18)}
+.hero-cta{position:absolute;right:max(20px,calc(50% - 560px));bottom:60px;display:flex;gap:10px;flex-wrap:wrap}
+.loader{position:absolute;inset:0;display:grid;place-items:center;background:var(--bg2);z-index:5;transition:opacity .6s}
+.loader.hide{opacity:0;pointer-events:none}
+.loader .ring{width:110px;height:110px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--acc);animation:spin 1s linear infinite}
+.loader .pct{position:absolute;font:600 20px 'JetBrains Mono',monospace}
+.loader small{position:absolute;margin-top:160px;color:var(--mute)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* факты */
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.fact{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.fact b{display:block;font:600 30px 'JetBrains Mono',monospace;color:var(--acc)}
+.fact span{color:var(--mute);font-size:15px}
+
+/* 3D-разбор */
+.lab{background:var(--bg2)}
+.labg{display:grid;grid-template-columns:1.35fr 1fr;gap:22px;margin-top:34px;align-items:start}
+.view{position:relative;background:radial-gradient(700px 400px at 50% 60%,#fff,#e3eae5);border:1px solid var(--line);border-radius:24px;aspect-ratio:4/3;overflow:hidden}
+#c2{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
+.hs{position:absolute;left:0;top:0;transform:translate(-50%,-50%);border:0;background:var(--acc);color:#fff;width:30px;height:30px;border-radius:50%;font:600 13px 'JetBrains Mono',monospace;cursor:pointer;box-shadow:0 0 0 6px rgba(11,125,95,.22);transition:background .2s,transform .2s}
+.hs:hover,.hs[aria-pressed=true]{background:var(--ink);transform:translate(-50%,-50%) scale(1.12)}
+.hs span{position:absolute;left:38px;top:50%;transform:translateY(-50%);white-space:nowrap;background:var(--card);color:var(--ink);padding:4px 10px;border-radius:8px;font:600 13px Onest;border:1px solid var(--line);opacity:0;pointer-events:none;transition:.2s}
+.hs:hover span,.hs[aria-pressed=true] span{opacity:1}
+.hs.back{opacity:.35}
+.vbar{position:absolute;left:12px;bottom:12px;display:flex;gap:8px;flex-wrap:wrap}
+.vbar button{border:1px solid var(--line);background:rgba(255,255,255,.9);border-radius:999px;padding:8px 14px;font:600 13px Onest;cursor:pointer;color:var(--ink)}
+.vbar button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:24px}
+.panel h3{font-size:24px;margin-bottom:6px}
+.panel>p{color:var(--mute);font-size:15px;margin-bottom:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.chips button{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:6px 12px;font:600 13px Onest;cursor:pointer;color:var(--mute)}
+.chips button[aria-pressed=true]{background:var(--acc);color:#fff;border-color:var(--acc)}
+.works{display:grid;gap:8px}
+.work{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:14px;cursor:pointer;transition:.2s}
+.work:hover{border-color:var(--acc)}
+.work input{width:18px;height:18px;accent-color:var(--acc)}
+.work small{display:block;color:var(--mute);font:500 12px 'JetBrains Mono',monospace}
+.work b{font:600 15px 'JetBrains Mono',monospace;white-space:nowrap}
+.order{margin-top:18px;border-top:1px dashed var(--line);padding-top:16px}
+.order .t{display:flex;justify-content:space-between;align-items:baseline;font-weight:700}
+.order .t b{font:600 26px 'JetBrains Mono',monospace;color:var(--acc)}
+.order small{color:var(--mute);display:block;margin:4px 0 12px}
+.order .btns{display:flex;gap:8px;flex-wrap:wrap}
+.order .btns .btn{padding:11px 18px;font-size:14px}
+
+/* запись */
+.bk{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin:16px 0}
+.days button,.slots button{flex:0 0 auto;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:10px 12px;font:600 14px Onest;cursor:pointer;color:var(--ink);text-align:center}
+.days button small{display:block;color:var(--mute);font-weight:500;font-size:12px}
+.days button[aria-pressed=true],.slots button[aria-pressed=true]{background:var(--acc);border-color:var(--acc);color:#fff}
+.days button[aria-pressed=true] small{color:#d7f2e8}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.slots button:disabled{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+form{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:26px;display:grid;gap:12px}
+input,select{width:100%;font:500 16px Onest;padding:13px 15px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+input:focus,select:focus{outline:2px solid var(--acc);outline-offset:1px}
+form small{color:var(--mute);font-size:12px}
+.sum{background:var(--bg2);border-radius:14px;padding:12px 14px;font-size:14px;color:var(--mute)}
+.sum b{color:var(--ink)}
+
+/* контакты */
+.ct{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+.ct div{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.ct h3{font:600 12px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:8px}
+.ct p{font-size:18px;font-weight:700}
+.ct .msg{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.ct .msg a{padding:8px 14px;border-radius:999px;color:#fff;text-decoration:none;font-weight:700;font-size:14px}
+.open{display:inline-flex;align-items:center;gap:8px;margin-top:6px;font-size:14px;color:var(--mute)}
+.open i{width:9px;height:9px;border-radius:50%;background:#9aa7a1}
+.open i.on{background:var(--acc);box-shadow:0 0 0 4px rgba(11,125,95,.18)}
+
+footer{border-top:1px solid var(--line);padding:30px 0;color:var(--mute);font-size:14px}
+footer .wr{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px}
+footer .made{display:inline-block;margin-top:8px;color:var(--mute);text-decoration:none;border-bottom:1px solid var(--line)}
+footer .made:hover{color:var(--acc)}
+footer .credit{font-size:12px;max-width:520px}
+.fab{position:fixed;right:16px;bottom:16px;z-index:45;display:none;gap:10px}
+.fab a{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;color:#fff;text-decoration:none;font-weight:800;font-size:13px;box-shadow:0 10px 24px rgba(0,0,0,.2)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,40px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;opacity:0;transition:.3s;z-index:60}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:980px){.labg,.bk{grid-template-columns:1fr}.facts{grid-template-columns:1fr 1fr}.ct{grid-template-columns:1fr}}
+@media (max-width:860px){
+  .nav ul{position:fixed;inset:70px 0 auto;flex-direction:column;gap:0;background:var(--bg);padding:8px 20px 16px;display:none;border-bottom:1px solid var(--line)}
+  .nav ul.open{display:flex}.nav ul a{display:block;padding:12px 0;font-size:18px}
+  .burger{display:block}.nav .btn{display:none}.fab{display:flex}
+  .hero-cta{left:20px;right:20px;bottom:56px;justify-content:center}
+  .chap{top:84px}.chap p,.chap ul{font-size:15px}.chap ul{display:none}
+}
+@media (max-width:600px){.sec{padding:72px 0}.slots{grid-template-columns:repeat(3,1fr)}.view{aspect-ratio:1/1}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.rv{opacity:1;transform:none}}
+</style>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wr">
+    <a class="logo" href="#top"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M7 15l3-3 3 2 4-5"/></svg></i>Светлый Бокс</a>
+    <ul id="menu">
+      <li><a href="#lab">3D-разбор</a></li>
+      <li><a href="#book">Запись</a></li>
+      <li><a href="#contacts">Контакты</a></li>
+    </ul>
+    <a class="btn pri" href="#book">Записаться</a>
+    <button class="burger" id="burger" aria-label="Меню">☰</button>
+  </div>
+</header>
+
+<main>
+<section class="track" id="top">
+  <div class="stage" id="stage">
+    <div class="nightbg" id="nightbg"></div>
+    <canvas id="c1" aria-label="3D-модель автомобиля: приёмка, ходовая, салон, свет и выдача"></canvas>
+    <div class="chap" aria-live="polite">
+      <div class="s on"><span class="n">01 · ПРИЁМКА</span><h1>Диагностика на виду</h1><p>Принимаем машину при вас: фото, пробег, замечания — всё в заказ-наряде. Листайте, покажем, что проверяем.</p><ul><li>Компьютерная диагностика 0 ₽ при ремонте</li><li>Цена фиксируется до начала работ</li></ul></div>
+      <div class="s"><span class="n">02 · ХОДОВАЯ И ТОРМОЗА</span><h2>Видно насквозь</h2><p>Диски, колодки, подвеска — замеряем и показываем на подъёмнике. Износ — в цифрах, а не «надо менять».</p><ul><li>Толщина дисков и колодок — в отчёте</li><li>Люфты снимаем на видео</li></ul></div>
+      <div class="s"><span class="n">03 · САЛОН И ЭЛЕКТРИКА</span><h2>Заглянем внутрь</h2><p>Ошибки блоков, кондиционер, мультимедиа и датчики. Чистим и заправляем климат с вакуумированием.</p><ul><li>Сканер под BMW, Mercedes, Audi</li><li>Антибактериальная обработка салона</li></ul></div>
+      <div class="s"><span class="n">04 · СВЕТ</span><h2>Видно ночью</h2><p>Регулируем фары по стенду, меняем лампы и блоки, полируем мутную оптику.</p><ul><li>Регулировка фар — бесплатно при ТО</li><li>Полировка оптики за 40 минут</li></ul></div>
+      <div class="s"><span class="n">05 · ВЫДАЧА</span><h2>Готово — с гарантией</h2><p>Отдаём машину со старыми запчастями, фото «до/после» и гарантией на работы 12 месяцев.</p><ul><li>Старые детали — вам в руки</li><li>Гарантия 12 месяцев</li></ul></div>
+    </div>
+    <div class="hero-cta"><a class="btn pri" href="#book">Записаться</a><a class="btn line" href="#lab">Посчитать ремонт</a></div>
+    <div class="prog" id="prog"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+    <div class="loader" id="loader"><div class="ring"></div><div class="pct" id="ldPct">0%</div><small>Загружаем 3D-модель…</small></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wr facts">
+    <div class="fact rv"><b>12 лет</b><span>ремонтируем автомобили</span></div>
+    <div class="fact rv"><b>6 постов</b><span>и свой подъёмник под кроссоверы</span></div>
+    <div class="fact rv"><b>12 мес.</b><span>гарантия на все работы</span></div>
+    <div class="fact rv"><b>0 ₽</b><span>диагностика при ремонте у нас</span></div>
+  </div>
+</section>
+
+<section class="sec lab" id="lab">
+  <div class="wr">
+    <span class="kick rv">3D-разбор</span>
+    <h2 class="rv">Соберите заказ-наряд сами</h2>
+    <p class="lead rv">Нажмите на узел машины — увидите работы, нормо-часы и цену. Отметьте нужное, и мы закрепим стоимость.</p>
+    <div class="labg">
+      <div class="view rv" id="view">
+        <canvas id="c2" aria-label="3D-модель: вращайте и выбирайте узел"></canvas>
+        <div id="hsw"></div>
+        <div class="vbar"><button type="button" id="bX" aria-pressed="false">Рентген</button><button type="button" id="bRot" aria-pressed="true">Вращать</button><button type="button" id="bReset">Общий вид</button></div>
+      </div>
+      <div class="panel rv">
+        <div class="chips" id="chips"></div>
+        <h3 id="nName">Двигатель</h3>
+        <p id="nDesc"></p>
+        <div class="works" id="works"></div>
+        <div class="order">
+          <div class="t"><span>Заказ-наряд</span><b id="oSum">0 ₽</b></div>
+          <small id="oInfo">Ничего не выбрано</small>
+          <div class="btns"><a class="btn pri" href="#book" id="oBook">Записаться с этим</a><button class="btn line" type="button" id="oPdf">Смета в PDF</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="book">
+  <div class="wr bk">
+    <div class="rv">
+      <span class="kick">Онлайн-запись</span>
+      <h2>Выберите день и время</h2>
+      <p class="lead">Свободные окна на ближайшие две недели. Подтвердим запись в мессенджере.</p>
+      <div class="days" id="days"></div>
+      <div class="slots" id="slots"></div>
+    </div>
+    <form id="bkForm" class="rv">
+      <div class="sum" id="bkSum">Выберите день и время слева</div>
+      <input name="name" required autocomplete="name" placeholder="Имя">
+      <input name="phone" type="tel" required autocomplete="tel" placeholder="Телефон">
+      <input name="car" placeholder="Марка, модель, год — например, BMW X5 2020">
+      <button class="btn pri" type="submit">Записаться через WhatsApp</button>
+      <small>Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</small>
+    </form>
+  </div>
+</section>
+
+<section class="sec" id="contacts" style="padding-top:0">
+  <div class="wr">
+    <span class="kick rv">Контакты</span>
+    <h2 class="rv">Как нас найти</h2>
+    <div class="ct">
+      <div class="rv"><h3>Адрес</h3><p>г. Челябинск, ул. Примерная, 12</p></div>
+      <div class="rv"><h3>Часы работы</h3><p>Пн–Сб 9:00–20:00</p><span class="open"><i id="oDot"></i><span id="oTxt"></span></span></div>
+      <div class="rv"><h3>Связь</h3><p><a href="tel:+77777777777" style="text-decoration:none">+7-777-777-77-77</a></p><div class="msg"><a href="https://wa.me/77777777777" target="_blank" rel="noopener" style="background:var(--wa)">WhatsApp</a><a href="https://t.me/" target="_blank" rel="noopener" style="background:var(--tg)">Telegram</a></div></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wr">
+    <div>© 2026 «Светлый Бокс» · демо, данные — образец<br><a class="made" href="https://saitnazakaz.site" target="_blank" rel="noopener">Сайт сделан в HTML_SAIT</a></div>
+    <div class="credit">3D-модель автомобиля: «<a href="https://sketchfab.com/3d-models/2020-bmw-x5-m-competition-9b211d525797457e988c903f67d0b753" target="_blank" rel="noopener">2020 BMW X5 M Competition</a>» — <a href="https://sketchfab.com/David_Holiday" target="_blank" rel="noopener">David_Holiday</a>, <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></div>
+  </div>
+</footer>
+
+<div class="fab"><a href="https://wa.me/77777777777" style="background:var(--wa)" aria-label="WhatsApp">WA</a><a href="https://t.me/" style="background:var(--tg)" aria-label="Telegram">TG</a></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== Данные (правьте здесь) ===== */
+window.SB = {
+  WA: '77777777777', HOUR: 2900, OPEN: [9, 20], DAYS_OFF: [0],
+  // узлы: p — точка на модели (x — бок, y — высота, z — вперёд; машина длиной 4,7), cam — ракурс
+  NODES: {
+    engine:  { n:'Двигатель', d:'Масло, ГРМ, свечи, форсунки. Показываем замеры и фото деталей до замены.', p:[0,1.12,1.75], cam:[2.6,2.4,4.6],
+      w:[['Компьютерная диагностика',.6,0],['Замена масла и фильтра',.7,0],['Свечи зажигания',1.2,6400],['Чистка дросселя',.8,0],['Промывка форсунок',1.4,0]] },
+    brakes:  { n:'Тормоза', d:'Колодки, диски, суппорты, жидкость. Толщину дисков меряем при вас.', p:[1.0,.38,1.38], cam:[3.6,.9,2.9],
+      w:[['Колодки передние, ось',1.0,9800],['Диски и колодки, ось',1.6,32000],['Замена тормозной жидкости',.8,1600]] },
+    susp:    { n:'Подвеска', d:'Пневмостойки, рычаги, сайлентблоки. Люфты снимаем на видео.', p:[1.0,.42,-1.22], cam:[3.8,1.0,-2.6],
+      w:[['Диагностика ходовой',.5,0],['Пневмостойка, 1 шт.',1.8,68000],['Сайлентблоки рычага',2.2,7400],['Развал-схождение 3D',1.2,0]] },
+    cabin:   { n:'Салон и электрика', d:'Ошибки блоков, АКБ, мультимедиа, датчики парковки.', p:[0,1.18,.25], cam:[.8,2.3,3.4],
+      w:[['Диагностика всех блоков',.8,0],['Замена АКБ с регистрацией',.6,21000],['Кодирование блоков',1.0,0]] },
+    ac:      { n:'Кондиционер', d:'Заправка с вакуумированием, поиск утечек, чистка радиатора.', p:[0,.62,2.33], cam:[1.6,1.1,5.2],
+      w:[['Диагностика кондиционера',.5,0],['Заправка с вакуумированием',1.0,1800],['Антибактериальная обработка',.6,900]] },
+    exhaust: { n:'Выхлоп', d:'Глушители, гофры, крепления, датчики кислорода.', p:[.55,.32,-2.3], cam:[2.6,.9,-5],
+      w:[['Осмотр выхлопной системы',.4,0],['Замена гофры',1.2,2800],['Датчик кислорода',.7,11500]] }
+  }
+};
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const SB = window.SB, $ = (s) => document.querySelector(s);
+const mobile = innerWidth < 760, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const rub = (n) => n.toLocaleString('ru-RU') + ' ₽';
+function toast(t){ const e = $('#toast'); e.textContent = t; e.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => e.classList.remove('on'), 2400); }
+
+/* ===== общая подготовка модели ===== */
+const PAINT = new THREE.Color('#1d3557');
+function prepare(root){
+  const box = new THREE.Box3().setFromObject(root), size = box.getSize(new THREE.Vector3()), c = box.getCenter(new THREE.Vector3());
+  const k = 4.7 / Math.max(size.x, size.z);
+  if (size.x > size.z) root.rotation.y = -Math.PI/2;           // длина — вдоль Z, перёд — +Z
+  root.scale.setScalar(k);
+  root.position.set(-c.x*k, -box.min.y*k, -c.z*k);
+  const wrap = new THREE.Group(); wrap.add(root); wrap.updateMatrixWorld(true);
+  const g = { body:[], glass:[], head:[], tail:[], keep:[], lamp:[new THREE.Vector3(), new THREE.Vector3()], lampB:[new THREE.Box3(), new THREE.Box3()], lampP:[[], []] };
+  root.traverse((o) => {
+    if (!o.isMesh) return;
+    o.frustumCulled = false;
+    let m = o.material; const n = (m.name || '').toLowerCase();
+    if (/marina_bay|color_m0/.test(n)) {
+      if (!o.material.userData.paint) { const p = new THREE.MeshPhysicalMaterial({ color: PAINT, metalness: .55, roughness: .28, clearcoat: 1, clearcoatRoughness: .05 }); p.userData.paint = 1; p.name = m.name; o.material = p; }
+      g.body.push(o.material);
+    } else if (/window/.test(n)) {
+      o.material = new THREE.MeshPhysicalMaterial({ color: 0x0c1418, transparent: true, opacity: .55, roughness: .03, clearcoat: 1, name: m.name });
+      g.glass.push(o.material);
+    } else if (/headlights_glass/.test(n)) { g.glass.push(m); m.transparent = true;
+      // центры передних фар — по стеклу фар (передняя часть, z > 1.5)
+      const pa = o.geometry.attributes.position, v = new THREE.Vector3();
+      for (let i = 0; i < pa.count; i += 3) { v.fromBufferAttribute(pa, i).applyMatrix4(o.matrixWorld);
+        if (v.z > 1.5) { const s = v.x > 0 ? 1 : 0; g.lampB[s].expandByPoint(v); g.lampP[s].push(v.clone()); } }
+    }
+    else if (/^lights$/.test(n)) {
+      // одна деталь на перёд и зад: цвет свечения — по положению точки (перёд белый, зад красный)
+      const mm = m.clone(); o.material = mm; mm.userData.u = { uN: { value: 0 } }; g.head.push(mm);
+      mm.onBeforeCompile = (sh) => {
+        sh.uniforms.uN = mm.userData.u.uN;
+        sh.vertexShader = 'varying float vZ;\n' + sh.vertexShader.replace('#include <project_vertex>', '#include <project_vertex>\n vZ=(modelMatrix*vec4(transformed,1.)).z;');
+        sh.fragmentShader = 'uniform float uN; varying float vZ;\n' + sh.fragmentShader.replace('#include <emissivemap_fragment>',
+          '#include <emissivemap_fragment>\n totalEmissiveRadiance += (vZ > 0. ? vec3(1.,.96,.88)*2.4 : vec3(1.,.04,.02)*1.8) * uN;');
+      };
+    } else if (/interior|undercarriage|rotor|calliper|tire|rim|gainsboro|charcoal|paint1|coloured|^material$/.test(n)) { g.keep.push(m); }
+    else { g.body.push(m); }
+  });
+  g.lamp.forEach((l, s) => { const b = g.lampB[s];
+    if (b.isEmpty()) { l.set(s ? .7 : -.7, .83, 2.12); return; }
+    // центр фары по x/y, а z — сама поверхность стекла в этой точке (фара загибается назад к боку)
+    b.getCenter(l);
+    l.x = s ? b.min.x + .17 : b.max.x - .17;   // внутренний модуль фары (ближе к решётке)
+    let zs = 0, zn = 0;
+    g.lampP[s].forEach((p) => { if (Math.abs(p.x - l.x) < .06 && Math.abs(p.y - l.y) < .06) { zs += p.z; zn++; } });
+    l.z = (zn ? zs / zn : b.max.z - .1) - .13; });   // глубже стекла — на уровне шестигранного отражателя
+  delete g.lampP;
+  g.body = [...new Set(g.body)]; g.glass = [...new Set(g.glass)];
+  g.body.forEach((m) => { m.userData.op = m.opacity; m.userData.tr = m.transparent; });
+  g.glass.forEach((m) => { m.userData.op = m.opacity; });
+  return { wrap, g };
+}
+function setXray(g, x){
+  g.body.forEach((m) => {
+    const on = x > .02;
+    if (m.transparent !== (on || m.userData.tr)) { m.transparent = on || m.userData.tr; m.needsUpdate = true; }
+    m.opacity = (m.userData.op ?? 1) * (1 - x*.88); m.depthWrite = !on;
+  });
+  g.glass.forEach((m) => { m.opacity = (m.userData.op ?? .5) * (1 - x*.8); });
+}
+function setGlass(g, v){ g.glass.forEach((m) => { m.opacity = (m.userData.op ?? .5) * (1 - v*.85); }); }
+function setLights(g, v){
+  g.head.forEach((m) => { m.userData.u.uN.value = v; });
+}
+function makeRenderer(canvas){
+  const r = new THREE.WebGLRenderer({ canvas, antialias: !mobile, alpha: true, powerPreference: 'high-performance' });
+  r.setPixelRatio(Math.min(devicePixelRatio, mobile ? 1.5 : 2));
+  r.toneMapping = THREE.ACESFilmicToneMapping; r.toneMappingExposure = 1.05; r.outputColorSpace = THREE.SRGBColorSpace;
+  return r;
+}
+function shadowMesh(){
+  const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d');
+  const gr = x.createRadialGradient(128,128,10,128,128,128); gr.addColorStop(0,'rgba(20,32,28,.55)'); gr.addColorStop(.65,'rgba(20,32,28,.2)'); gr.addColorStop(1,'rgba(20,32,28,0)');
+  x.fillStyle = gr; x.fillRect(0,0,256,256);
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 6.2), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false }));
+  m.rotation.x = -Math.PI/2; m.position.y = .003; return m;
+}
+
+/* ===== сцена 1: история по прокрутке ===== */
+const c1 = $('#c1'), r1 = makeRenderer(c1), s1 = new THREE.Scene();
+const env = new THREE.PMREMGenerator(r1).fromScene(new RoomEnvironment(r1), .04).texture; s1.environment = env;
+const cam1 = new THREE.PerspectiveCamera(mobile ? 46 : 34, 1, .05, 100);
+const hemi = new THREE.HemisphereLight(0xffffff, 0xc8d4cd, .6); s1.add(hemi);
+const sun = new THREE.DirectionalLight(0xffffff, 1.4); sun.position.set(4, 7, 5); s1.add(sun);
+s1.add(shadowMesh());
+/* лучи фар ночью */
+const beamMat = new THREE.ShaderMaterial({
+  uniforms: { uO: { value: 0 }, uC: { value: new THREE.Color(0xfff3d8) } },
+  vertexShader: 'varying vec2 vUv; varying vec3 vN; varying vec3 vV;  void main(){ vUv = uv; vec4 mv = modelViewMatrix * vec4(position,1.); vN = normalize(normalMatrix * normal); vV = normalize(-mv.xyz); gl_Position = projectionMatrix * mv; }',
+  fragmentShader: 'uniform float uO; uniform vec3 uC; varying vec2 vUv; varying vec3 vN; varying vec3 vV;  void main(){ float along = pow(vUv.y, 2.2); float edge = pow(abs(dot(normalize(vN), normalize(vV))), 2.); gl_FragColor = vec4(uC, along * edge * uO); }',
+  transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide });
+/* свечение самих фар */
+const glowTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 128; const x = c.getContext('2d');
+  const gr = x.createRadialGradient(64,64,0,64,64,64); gr.addColorStop(0,'rgba(255,252,242,1)'); gr.addColorStop(.28,'rgba(255,246,222,.95)'); gr.addColorStop(.55,'rgba(255,238,205,.35)'); gr.addColorStop(1,'rgba(255,236,200,0)');
+  x.fillStyle = gr; x.fillRect(0,0,128,128); return new THREE.CanvasTexture(c); })();
+const glowMat = new THREE.SpriteMaterial({ map: glowTex, transparent: true, opacity: 0, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending });
+const glows = [0, 1].map(() => { const sp = new THREE.Sprite(glowMat); sp.scale.setScalar(.52); s1.add(sp); return sp; });
+const BL = 4.2;
+const beams = [0, 1].map(() => { const geo = new THREE.ConeGeometry(.8, BL, 40, 1, true); geo.translate(0, -BL/2, 0); geo.rotateX(-Math.PI/2 + .07); const m = new THREE.Mesh(geo, beamMat); s1.add(m); return m; }); // вершина в (0,0,0), луч вперёд и чуть вниз
+const spot = new THREE.SpotLight(0xfff3d6, 0, 14, .45, .6); spot.position.set(0, .8, 2.3); spot.target.position.set(0, 0, 8); s1.add(spot, spot.target);
+
+let G1 = null;
+// ключевые кадры: позиция камеры, точка взгляда, рентген, стекло, ночь
+const K = [
+  { p:[6.6,2.0,6.4],  t:[0,.7,.2],   x:0,  gl:0,  n:0 },
+  { p:[3.4,.62,3.3],  t:[0,.42,1.3],  x:.9, gl:0,  n:0 },
+  { p:[.35,1.62,2.55], t:[0,1.02,.15], x:0,  gl:1,  n:0 },
+  { p:[3.2,1.15,8.8], t:[0,.75,1.0],  x:0,  gl:0,  n:1 },
+  { p:[-6.4,1.9,-6.0],t:[0,.7,-.2],  x:0,  gl:0,  n:0 }
+];
+if (mobile) { K[0].p = [6.6,2.1,7.2]; K[1].p = [4.4,.9,4.6]; K[2].p = [.35,1.75,3.1]; K[3].p = [3.4,1.2,9.6]; K[4].p = [-6.6,2.0,-6.4]; }
+const track = $('#top'), caps = [...document.querySelectorAll('.chap .s')], bars = [...document.querySelectorAll('#prog b')];
+const stage = $('#stage'), nightbg = $('#nightbg');
+let target = 0, cur = 0, run1 = false, vis1 = true;
+const ease = (t) => t < .5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2)/2;
+const V = (a) => new THREE.Vector3(...a);
+function readScroll(){ const r = track.getBoundingClientRect(), h = track.offsetHeight - innerHeight; target = Math.min(1, Math.max(0, -r.top / h)); if (reduce) cur = target; }
+// где на прокрутке стоит каждая глава: длинным перелётам — больше места (последний облёт к корме — самый длинный)
+const STOP = [0, .158, .294, .493, 1];
+function pToF(p){ let i = 0; while (i < STOP.length - 2 && p > STOP[i + 1]) i++; return i + (p - STOP[i]) / (STOP[i + 1] - STOP[i]); }
+const sine = (t) => .5 - .5 * Math.cos(Math.PI * t);   // мягкий разгон и торможение без рывка в середине
+function orbit(a, b, t){   // камера облетает машину по дуге, а не режет её насквозь
+  const aa = Math.atan2(a[0], a[2]), ab = Math.atan2(b[0], b[2]); let d = ab - aa; if (d > Math.PI) d -= 2*Math.PI; if (d < -Math.PI) d += 2*Math.PI;
+  const ang = aa + d * t, r = Math.hypot(a[0], a[2]) + (Math.hypot(b[0], b[2]) - Math.hypot(a[0], a[2])) * t;
+  return new THREE.Vector3(Math.sin(ang) * r, a[1] + (b[1] - a[1]) * t, Math.cos(ang) * r);
+}
+function state(p){
+  const f = pToF(p), i = Math.min(K.length - 2, Math.floor(f)), t = sine(Math.min(1, Math.max(0, (f - i) * 1.12 - .06)));
+  const a = K[i], b = K[i + 1], L = (u, v) => u + (v - u) * t;
+  return { p: orbit(a.p, b.p, t), t: V(a.t).lerp(V(b.t), t), x: L(a.x, b.x), gl: L(a.gl, b.gl), n: L(a.n, b.n), i: Math.round(f), f };
+}
+function frame1(){
+  cur += (target - cur) * (reduce ? 1 : .09);
+  const s = state(cur);
+  const fit = cam1.aspect < 1 ? Math.min(1.45, Math.max(1, .66 / cam1.aspect)) : 1;   // портрет — отъезжаем
+  cam1.position.copy(s.p).sub(s.t).multiplyScalar(1 + (fit - 1) * (1 - s.gl)).add(s.t); cam1.lookAt(s.t);
+  if (G1) { setXray(G1, s.x); if (s.x < .02) setGlass(G1, s.gl); setLights(G1, s.n); }
+  hemi.intensity = .6 - .45*s.n; sun.intensity = 1.4 - 1.25*s.n; r1.toneMappingExposure = 1.05 - .3*s.n;
+  beamMat.uniforms.uO.value = .55 * s.n; glowMat.opacity = s.n; spot.intensity = 30 * s.n;
+  nightbg.style.opacity = s.n; stage.classList.toggle('dark', s.n > .5);
+  caps.forEach((c, k) => c.classList.toggle('on', k === s.i));
+  const f = s.f;
+  bars.forEach((b, k) => b.style.width = Math.min(100, Math.max(0, (f - k + .5) * 100)) + '%');
+  r1.render(s1, cam1);
+  if (vis1 && Math.abs(target - cur) > .0004) requestAnimationFrame(frame1); else run1 = false;
+}
+function kick1(){ if (!run1) { run1 = true; requestAnimationFrame(frame1); } }
+function size1(){ const w = c1.clientWidth, h = c1.clientHeight; r1.setSize(w, h, false); cam1.aspect = w/h;
+  if (w > 980) cam1.setViewOffset(w, h, -w*.17, 0, w, h); else cam1.clearViewOffset();  // машина правее текста
+  cam1.updateProjectionMatrix(); kick1(); }
+addEventListener('scroll', () => { readScroll(); kick1(); }, { passive: true });
+new IntersectionObserver((e) => { vis1 = e[0].isIntersecting; if (vis1) kick1(); }).observe(track);
+
+/* ===== сцена 2: 3D-разбор ===== */
+const c2 = $('#c2'), r2 = makeRenderer(c2), s2 = new THREE.Scene(); s2.environment = new THREE.PMREMGenerator(r2).fromScene(new RoomEnvironment(r2), .04).texture;
+s2.add(new THREE.HemisphereLight(0xffffff, 0xc8d4cd, .6)); const sun2 = new THREE.DirectionalLight(0xffffff, 1.3); sun2.position.set(4, 7, 5); s2.add(sun2); s2.add(shadowMesh());
+const cam2 = new THREE.PerspectiveCamera(32, 4/3, .05, 100); cam2.position.set(6.4, 2.6, 6.4);
+const ctl = new OrbitControls(cam2, c2); ctl.target.set(0, .7, 0); ctl.enableDamping = true; ctl.enablePan = false; ctl.minDistance = 3; ctl.maxDistance = 11; ctl.maxPolarAngle = 1.52; ctl.autoRotate = !reduce; ctl.autoRotateSpeed = .8;
+let G2 = null, xr = 0, xrT = 0, fly = null, run2 = false, vis2 = false;
+const hsw = $('#hsw'), keys = Object.keys(SB.NODES);
+hsw.innerHTML = keys.map((k, i) => `<button class="hs" type="button" data-n="${k}" aria-pressed="false"><b>${i + 1}</b><span>${SB.NODES[k].n}</span></button>`).join('');
+const hsEls = [...hsw.querySelectorAll('.hs')];
+function frame2(){
+  ctl.update();
+  if (fly) { fly.t = Math.min(1, fly.t + .04); const e = ease(fly.t); cam2.position.lerpVectors(fly.p0, fly.p1, e); ctl.target.lerpVectors(fly.t0, fly.t1, e); if (fly.t >= 1) fly = null; }
+  xr += (xrT - xr) * .12; if (G2) setXray(G2, xr);
+  const w = c2.clientWidth, h = c2.clientHeight, v = new THREE.Vector3(), dir = new THREE.Vector3();
+  keys.forEach((k, i) => {
+    v.set(...SB.NODES[k].p); dir.copy(v).sub(cam2.position);
+    const back = dir.dot(new THREE.Vector3(v.x, v.y - .7, v.z).normalize()) > .6 && xr < .5;
+    v.project(cam2);
+    hsEls[i].style.left = (v.x * .5 + .5) * w + 'px'; hsEls[i].style.top = (-v.y * .5 + .5) * h + 'px';
+    hsEls[i].classList.toggle('back', back);
+  });
+  r2.render(s2, cam2);
+  if (vis2) requestAnimationFrame(frame2); else run2 = false;
+}
+function kick2(){ if (!run2 && vis2) { run2 = true; requestAnimationFrame(frame2); } }
+function size2(){ const w = c2.clientWidth, h = c2.clientHeight; r2.setSize(w, h, false); cam2.aspect = w/h; cam2.updateProjectionMatrix(); }
+new IntersectionObserver((e) => { vis2 = e[0].isIntersecting; kick2(); }).observe(c2);
+function flyTo(p, t){ fly = { t: 0, p0: cam2.position.clone(), p1: V(p), t0: ctl.target.clone(), t1: V(t) }; }
+function rot(on){ ctl.autoRotate = on && !reduce; $('#bRot').setAttribute('aria-pressed', on); }
+c2.addEventListener('pointerdown', () => rot(false));
+$('#bRot').addEventListener('click', () => rot(!ctl.autoRotate));
+$('#bX').addEventListener('click', () => { xrT = xrT > .5 ? 0 : 1; $('#bX').setAttribute('aria-pressed', xrT > .5); });
+$('#bReset').addEventListener('click', () => { flyTo([6.4, 2.6, 6.4], [0, .7, 0]); xrT = 0; $('#bX').setAttribute('aria-pressed', false); });
+
+/* заказ-наряд */
+let NODE = 'engine'; const PICK = new Set();
+const price = (w) => Math.round(w[1] * SB.HOUR / 50) * 50 + w[2];
+function renderNode(){
+  const N = SB.NODES[NODE];
+  $('#chips').innerHTML = keys.map((k) => `<button type="button" data-n="${k}" aria-pressed="${k === NODE}">${SB.NODES[k].n}</button>`).join('');
+  $('#nName').textContent = N.n; $('#nDesc').textContent = N.d;
+  $('#works').innerHTML = N.w.map((w, i) => { const id = NODE + ':' + i;
+    return `<label class="work"><input type="checkbox" data-id="${id}" ${PICK.has(id) ? 'checked' : ''}><span>${w[0]}<small>${w[1].toString().replace('.', ',')} н/ч${w[2] ? ' + запчасти ' + rub(w[2]) : ''}</small></span><b>${rub(price(w))}</b></label>`; }).join('');
+  hsEls.forEach((b) => b.setAttribute('aria-pressed', b.dataset.n === NODE));
+}
+function renderOrder(){
+  let sum = 0, h = 0; const items = [];
+  PICK.forEach((id) => { const [k, i] = id.split(':'), w = SB.NODES[k].w[+i]; sum += price(w); h += w[1]; items.push(w[0]); });
+  $('#oSum').textContent = rub(sum);
+  $('#oInfo').textContent = items.length ? `${items.length} поз. · ${h.toFixed(1).replace('.', ',')} н/ч · нормо-час ${rub(SB.HOUR)}` : 'Ничего не выбрано';
+  ORDER = items; bkSum();
+}
+let ORDER = [];
+function selNode(k, fly2){ NODE = k; renderNode(); if (fly2 !== false) { const N = SB.NODES[k]; flyTo(N.cam, N.p); rot(false); kick2(); } }
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-n]'); if (b) selNode(b.dataset.n);
+});
+$('#works').addEventListener('change', (e) => { const id = e.target.dataset.id; if (!id) return; e.target.checked ? PICK.add(id) : PICK.delete(id); renderOrder(); });
+$('#oPdf').addEventListener('click', () => {
+  if (!PICK.size) { toast('Отметьте хотя бы одну работу'); return; }
+  let rows = '', sum = 0; PICK.forEach((id) => { const [k, i] = id.split(':'), w = SB.NODES[k].w[+i], p = price(w); sum += p; rows += `<tr><td>${SB.NODES[k].n}</td><td>${w[0]}</td><td>${w[1]}</td><td>${rub(p)}</td></tr>`; });
+  const wnd = window.open('', '_blank'); if (!wnd) { toast('Разрешите всплывающие окна'); return; }
+  wnd.document.write(`<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><title>Смета — Светлый Бокс</title><style>body{font:14px/1.5 Arial,sans-serif;color:#14201c;margin:32px}h1{font-size:22px}table{width:100%;border-collapse:collapse;margin:14px 0}th,td{text-align:left;padding:7px;border-bottom:1px solid #ccc}.t{font-size:20px;font-weight:bold}small{color:#5a6a63}</style></head><body><h1>Предварительная смета</h1><small>Светлый Бокс · г. Челябинск · ${new Date().toLocaleDateString('ru-RU')}</small><table><tr><th>Узел</th><th>Работа</th><th>Н/ч</th><th>Сумма</th></tr>${rows}</table><p class="t">Итого: ${rub(sum)}</p><p><small>Демо-документ: данные — образец. Точная цена — после диагностики.</small></p><script>onload=function(){print()}<\/script></body></html>`);
+  wnd.document.close();
+});
+
+/* ===== загрузка модели (одна загрузка — две сцены) ===== */
+function onModel(gltf){
+  const copy = gltf.scene.clone(true);                       // копия — до масштабирования
+  const a = prepare(gltf.scene); G1 = a.g; s1.add(a.wrap);
+  beams.forEach((b, s) => b.position.copy(G1.lamp[s])); glows.forEach((sp, s) => sp.position.copy(G1.lamp[s]).add(new THREE.Vector3(0, 0, .0))); spot.position.set(0, G1.lamp[0].y, G1.lamp[0].z);
+  const b = prepare(copy); G2 = b.g; s2.add(b.wrap);
+  $('#loader').classList.add('hide'); size1(); size2(); kick1(); kick2();
+}
+const fail = () => { $('#ldPct').textContent = '!'; };
+if (location.protocol === 'file:') {
+  // открыт с диска двойным щелчком: браузер не даёт прочитать car.glb, берём ту же модель из car-glb.js
+  const sc = document.createElement('script'); sc.src = 'car-glb.js';
+  sc.onload = () => { const bin = atob(window.CAR_GLB), u8 = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+    window.CAR_GLB = null; new GLTFLoader().parse(u8.buffer, '', onModel, fail); };
+  sc.onerror = fail; document.head.appendChild(sc);
+} else {
+  // сервер отдаёт файл сжатым: e.total — сжатый размер, e.loaded — распакованные байты; считаем от настоящего размера модели
+  const GLB_SIZE = 10133612;
+  new GLTFLoader().load('car.glb', onModel, (e) => { $('#ldPct').textContent = Math.min(99, Math.round(e.loaded / Math.max(e.total || 0, GLB_SIZE) * 100)) + '%'; }, fail);
+}
+addEventListener('resize', () => { size1(); size2(); });
+readScroll(); size1(); size2();
+
+/* ===== запись ===== */
+const DAYS = [], WD = ['вс','пн','вт','ср','чт','пт','сб'];
+for (let i = 0; DAYS.length < 14; i++) { const d = new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate() + i); if (!SB.DAYS_OFF.includes(d.getDay())) DAYS.push(d); }
+let DAY = 0, SLOT = null;
+const busy = (d, h) => ((d.getDate() * 7 + h * 3) % 5) === 0;
+function renderDays(){ $('#days').innerHTML = DAYS.map((d, i) => `<button type="button" data-d="${i}" aria-pressed="${i === DAY}">${d.getDate()}.${String(d.getMonth()+1).padStart(2,'0')}<small>${WD[d.getDay()]}</small></button>`).join(''); }
+function renderSlots(){
+  const d = DAYS[DAY], now = new Date(); let html = '';
+  for (let h = SB.OPEN[0]; h < SB.OPEN[1] - 1; h++) { const past = d.toDateString() === now.toDateString() && h <= now.getHours(); const dis = past || busy(d, h);
+    html += `<button type="button" data-h="${h}" ${dis ? 'disabled' : ''} aria-pressed="${SLOT === h}">${h}:00</button>`; }
+  $('#slots').innerHTML = html;
+}
+function bkSum(){
+  const d = DAYS[DAY], t = SLOT == null ? 'выберите время' : SLOT + ':00';
+  $('#bkSum').innerHTML = `<b>${d.toLocaleDateString('ru-RU', { day:'numeric', month:'long' })}, ${t}</b>${ORDER.length ? '<br>Работы: ' + ORDER.join(', ') : ''}`;
+}
+$('#days').addEventListener('click', (e) => { const b = e.target.closest('[data-d]'); if (!b) return; DAY = +b.dataset.d; SLOT = null; renderDays(); renderSlots(); renderNode(); renderOrder(); });
+$('#slots').addEventListener('click', (e) => { const b = e.target.closest('[data-h]'); if (!b || b.disabled) return; SLOT = +b.dataset.h; renderSlots(); bkSum(); });
+$('#bkForm').addEventListener('submit', (e) => {
+  e.preventDefault(); if (SLOT == null) { toast('Выберите время записи'); return; }
+  const f = e.target, d = DAYS[DAY];
+  const txt = `Запись в «Светлый Бокс»: ${d.toLocaleDateString('ru-RU')} ${SLOT}:00. ${f.name.value}, ${f.phone.value}${f.car.value ? ', ' + f.car.value : ''}${ORDER.length ? '. Работы: ' + ORDER.join(', ') : ''}`;
+  window.open('https://wa.me/' + SB.WA + '?text=' + encodeURIComponent(txt), '_blank');
+});
+renderDays(); renderSlots(); renderNode(); renderOrder();
+
+/* ===== прочее ===== */
+const nav = $('#nav'); const onS = () => nav.classList.toggle('solid', scrollY > 40); addEventListener('scroll', onS, { passive: true }); onS();
+$('#burger').addEventListener('click', () => $('#menu').classList.toggle('open'));
+$('#menu').addEventListener('click', (e) => { if (e.target.tagName === 'A') $('#menu').classList.remove('open'); });
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+document.querySelectorAll('.rv').forEach((el) => io.observe(el));
+(function(){ const n = new Date(), h = n.getHours(), on = !SB.DAYS_OFF.includes(n.getDay()) && h >= SB.OPEN[0] && h < SB.OPEN[1];
+  $('#oDot').className = on ? 'on' : ''; $('#oTxt').textContent = on ? 'Сейчас открыто' : 'Сейчас закрыто — откроемся в 9:00'; })();
+</script>
+</body>
+</html>
